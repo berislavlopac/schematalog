@@ -46,10 +46,15 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+*-coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
 .pytest_cache/
+test-reports/
+
+# Various testing files
+.mutmut-cache
 
 # Translations
 *.mo
@@ -76,12 +81,15 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+.ipynb
 
 # IPython
 profile_default/
 ipython_config.py
 
 # pyenv
+#   For a library or package, you might want to ignore these files since the code is
+#   intended to run in multiple environments; otherwise, check them in:
 .python-version
 
 # pipenv
@@ -90,6 +98,10 @@ ipython_config.py
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
 #Pipfile.lock
+
+# poetry
+# same reasoning as for Pipenv applies here
+poetry.lock
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
@@ -127,3 +139,52 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# pytype static type analyzer
+.pytype/
+
+
+
+# PyCharm stuff
+.idea
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Generated files
+.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# Editor workspace files
+.vscode
+
+.testmondata
+
+# macOS
+.DS_Store
+
+# Docker stuff for local dev
+docker-compose.override.yml
+
+.skip-hooks
+
+tmp/
+
+
+# run configurations
+.run/
+/.run/
+
+# kube manifest
+helm/baked_manifest.yaml
