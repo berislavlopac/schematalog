@@ -273,6 +273,44 @@
           "email",
           "emailVerified"
         ]
+      },
+      "Schema": {
+        "title": "Schema",
+        "x-stoplight": {
+          "id": "2hnm9ob2568rf"
+        },
+        "type": "object",
+        "description": "JSON Schema specification.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[\\w\\-]*$",
+            "description": "Unique name of the schema."
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^([0-9]+)\\.([0-9]+)$",
+            "description": "Version of the schema, in the comver form: [major].[minor]."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the schema."
+          },
+          "schema": {
+            "$ref": "https://json-schema.org/draft/2020-12/schema"
+          },
+          "published_on": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Time of publishing. If null the schema is considered draft; a published schema can not be altered."
+          }
+        },
+        "required": [
+          "name",
+          "version",
+          "schema",
+          "published_on"
+        ]
       }
     }
   }
