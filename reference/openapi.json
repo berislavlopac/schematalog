@@ -22,267 +22,173 @@
     }
   ],
   "paths": {
-    "/users/{userId}": {
+    "/schemas": {
+      "get": {
+        "summary": "Get all schemas",
+        "tags": [
+          "json-schema"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "List of found schemas.",
+                  "items": {
+                    "$ref": "#/components/schemas/Schema"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "retrieve-schemas",
+        "description": "Retrieve latest versions of all published schemas."
+      }
+    },
+    "/schemas/{name}": {
       "parameters": [
         {
           "schema": {
-            "type": "integer"
+            "type": "string"
           },
-          "name": "userId",
+          "name": "name",
           "in": "path",
-          "required": true,
-          "description": "Id of an existing user."
+          "required": true
         }
       ],
       "get": {
-        "summary": "Get User Info by User ID",
-        "tags": [],
+        "summary": "Get schema",
+        "tags": [
+          "json-schema"
+        ],
         "responses": {
           "200": {
-            "description": "User Found",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
-                },
-                "examples": {
-                  "Get User Alice Smith": {
-                    "value": {
-                      "id": 142,
-                      "firstName": "Alice",
-                      "lastName": "Smith",
-                      "email": "alice.smith@gmail.com",
-                      "dateOfBirth": "1997-10-31",
-                      "emailVerified": true,
-                      "signUpDate": "2019-08-24"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Schema"
                 }
               }
             }
-          },
-          "404": {
-            "description": "User Not Found"
           }
         },
-        "operationId": "get-users-userId",
-        "description": "Retrieve the information of the user with the matching user ID."
+        "operationId": "retrieve-schema",
+        "description": "Retrieve the latest version of a schema."
       },
-      "patch": {
-        "summary": "Update User Information",
-        "operationId": "patch-users-userId",
+      "put": {
+        "summary": "Update schema",
+        "operationId": "update-schema",
         "responses": {
           "200": {
-            "description": "User Updated",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
-                },
-                "examples": {
-                  "Updated User Rebecca Baker": {
-                    "value": {
-                      "id": 13,
-                      "firstName": "Rebecca",
-                      "lastName": "Baker",
-                      "email": "rebecca@gmail.com",
-                      "dateOfBirth": "1985-10-02",
-                      "emailVerified": false,
-                      "createDate": "2019-08-24"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Schema"
                 }
               }
             }
           },
-          "404": {
-            "description": "User Not Found"
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Schema"
+                }
+              }
+            }
           },
           "409": {
-            "description": "Email Already Taken"
+            "description": "Conflict"
           }
         },
-        "description": "Update the information of an existing user.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "firstName": {
-                    "type": "string"
-                  },
-                  "lastName": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string",
-                    "description": "If a new email is given, the user's email verified property will be set to false."
-                  },
-                  "dateOfBirth": {
-                    "type": "string"
-                  }
-                }
-              },
-              "examples": {
-                "Update First Name": {
-                  "value": {
-                    "firstName": "Rebecca"
-                  }
-                },
-                "Update Email": {
-                  "value": {
-                    "email": "rebecca@gmail.com"
-                  }
-                },
-                "Update Last Name & Date of Birth": {
-                  "value": {
-                    "lastName": "Baker",
-                    "dateOfBirth": "1985-10-02"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Patch user properties to update."
-        }
+        "description": "Update the latest non-published version of the schema. If the name does not exist, a new draft schema (with `version=0.0`) is inserted. Otherwise, if there are no non-published versions, `409 CONFLICT` is returned.",
+        "tags": [
+          "json-schema"
+        ]
       }
     },
-    "/user": {
-      "post": {
-        "summary": "Create New User",
-        "operationId": "post-user",
+    "/schemas/{name}/{version}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "name",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "version",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get schema version",
+        "tags": [
+          "json-schema"
+        ],
         "responses": {
           "200": {
-            "description": "User Created",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
-                },
-                "examples": {
-                  "New User Bob Fellow": {
-                    "value": {
-                      "id": 12,
-                      "firstName": "Bob",
-                      "lastName": "Fellow",
-                      "email": "bob.fellow@gmail.com",
-                      "dateOfBirth": "1996-08-24",
-                      "emailVerified": false,
-                      "createDate": "2020-11-18"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Schema"
                 }
               }
             }
-          },
-          "400": {
-            "description": "Missing Required Information"
-          },
-          "409": {
-            "description": "Email Already Taken"
           }
         },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "firstName": {
-                    "type": "string"
-                  },
-                  "lastName": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  },
-                  "dateOfBirth": {
-                    "type": "string",
-                    "format": "date"
-                  }
-                },
-                "required": [
-                  "firstName",
-                  "lastName",
-                  "email",
-                  "dateOfBirth"
-                ]
-              },
-              "examples": {
-                "Create User Bob Fellow": {
-                  "value": {
-                    "firstName": "Bob",
-                    "lastName": "Fellow",
-                    "email": "bob.fellow@gmail.com",
-                    "dateOfBirth": "1996-08-24"
-                  }
+        "operationId": "retrieve-schema-version",
+        "description": "Retrieve a specific version of a schema."
+      },
+      "put": {
+        "summary": "Update schema version",
+        "operationId": "update-schema-version",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Schema"
                 }
               }
             }
           },
-          "description": "Post the necessary fields for the API to create a new user."
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Schema"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict"
+          }
         },
-        "description": "Create a new user."
+        "description": "Update the latest non-published version of the schema.",
+        "tags": [
+          "json-schema"
+        ]
       }
     }
   },
   "components": {
     "schemas": {
-      "User": {
-        "title": "User",
-        "type": "object",
-        "description": "",
-        "x-examples": {
-          "Alice Smith": {
-            "id": 142,
-            "firstName": "Alice",
-            "lastName": "Smith",
-            "email": "alice.smith@gmail.com",
-            "dateOfBirth": "1997-10-31",
-            "emailVerified": true,
-            "signUpDate": "2019-08-24"
-          }
-        },
-        "properties": {
-          "id": {
-            "type": "integer",
-            "description": "Unique identifier for the given user."
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date",
-            "example": "1997-10-31"
-          },
-          "emailVerified": {
-            "type": "boolean",
-            "description": "Set to true if the user's email has been verified."
-          },
-          "createDate": {
-            "type": "string",
-            "format": "date",
-            "description": "The date that the user was created."
-          }
-        },
-        "required": [
-          "id",
-          "firstName",
-          "lastName",
-          "email",
-          "emailVerified"
-        ]
-      },
       "Schema": {
         "title": "Schema",
         "x-stoplight": {
@@ -299,7 +205,9 @@
           "version": {
             "type": "string",
             "pattern": "^([0-9]+)\\.([0-9]+)$",
-            "description": "Version of the schema, in the comver form: [major].[minor]."
+            "description": "Version of the schema, in the comver form: [major].[minor].",
+            "example": "1.2",
+            "default": 0
           },
           "description": {
             "type": "string",
@@ -308,19 +216,31 @@
           "schema": {
             "$ref": "https://json-schema.org/draft/2020-12/schema"
           },
+          "created_on": {
+            "type": "string",
+            "description": "Date and time when the schema version was created.",
+            "format": "date-time"
+          },
           "published_on": {
             "type": "string",
             "format": "date-time",
-            "description": "Time of publishing. If null the schema is considered draft; a published schema can not be altered."
+            "description": "Time of publishing. If not present or null, the schema is considered draft; a published schema version can not be altered."
+          },
+          "deprecated_since": {
+            "type": "string",
+            "format": "date-time",
+            "description": "If present, the schema version is deprecated and should not be used."
           }
         },
         "required": [
-          "name",
-          "version",
-          "schema",
-          "published_on"
+          "schema"
         ]
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "json-schema"
+    }
+  ]
 }
