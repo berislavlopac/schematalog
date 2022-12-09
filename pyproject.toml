@@ -23,7 +23,9 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = [
+  "pyapi-server~=0.2",
+]
 dynamic = ["version"]
 
 [project.urls]
