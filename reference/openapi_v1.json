@@ -5,11 +5,20 @@
   },
   "info": {
     "title": "Schematalog",
-    "version": "1.0"
+    "version": "1.0",
+    "contact": {
+      "name": "Berislav Lopac",
+      "url": "https://github.com/berislavlopac/",
+      "email": "berislav@lopac.net"
+    },
+    "license": {
+      "name": "MIT"
+    },
+    "description": "API for cataloguing JSON Schema specifications."
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "http://localhost:3000/v1"
     }
   ],
   "paths": {
