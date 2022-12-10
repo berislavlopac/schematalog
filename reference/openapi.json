@@ -45,7 +45,7 @@
           }
         },
         "operationId": "retrieve-schemas",
-        "description": "Retrieve latest versions of all published schemas."
+        "description": "Retrieve the latest versions of all published schemas."
       }
     },
     "/schemas/{name}": {
@@ -150,7 +150,7 @@
           }
         },
         "operationId": "retrieve-schema-version",
-        "description": "Retrieve a specific version of a schema."
+        "description": "Retrieve a specific version of a schema. If either the name or the version do not exist, a new draft schema, with the given version, is inserted. If the version is published or deprecated, `409 CONFLICT` is returned."
       },
       "put": {
         "summary": "Update schema version",
