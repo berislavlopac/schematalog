@@ -1,11 +1,6 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
 name = "schematalog"
-description = 'API for cataloguing JSON Schema specifications.'
-readme = "README.md"
+description = "API for cataloging JSON Schema specifications."
 requires-python = ">=3.10"
 license = "MIT"
 keywords = []
@@ -23,19 +18,10 @@ classifiers = [
 dependencies = [
   "pyapi-server[uvicorn]~=0.2",
 ]
-dynamic = ["version"]
+version = "1.0.0"
 
-[project.urls]
-Documentation = "https://github.com/berislavlopac/schematalog#readme"
-Issues = "https://github.com/berislavlopac/schematalog/issues"
-Source = "https://github.com/berislavlopac/schematalog"
-
-[tool.hatch.version]
-path = "schematalog/VERSION"
-pattern = "(?P<version>\\S*)"
-
-[tool.hatch.envs.default]
-dependencies = [
+[project.optional-dependencies]
+dev = [
   "pytest",
   "pytest-cov",
   "black",
@@ -43,48 +29,19 @@ dependencies = [
   "pylint",
   "mypy",
 ]
-[tool.hatch.envs.default.scripts]
-cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=schematalog --cov=tests {args}"
-no-cov = "cov --no-cov {args}"
-
-[[tool.hatch.envs.test.matrix]]
-python = ["310", "311"]
-
-[tool.pytest.ini_options]
-asyncio_mode = "auto"
-
-[tool.coverage.run]
-branch = true
-parallel = true
-source = [ "schematalog/", ]
-omit = [ "*/tests/*", "schematalog/__about__.py", ]
-
-[tool.coverage.report]
-skip_covered = true
-show_missing = true
-fail_under = 85
-exclude_lines = [
-  "no cov", "pragma: no cover", "@abstract",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
+docs = [
+  "mkdocs",
+  "mkapi",
+  "mkdocs-material",
+  "pymdown-extensions",
+  "jinja2 < 3.1.0",
 ]
 
-[tool.black]
-line-length = 96
-target-version = ['py38', 'py39', 'py310']
-verbose = false
-skip-string-normalization = false
+[project.urls]
+Documentation = "https://github.com/berislavlopac/schematalog#readme"
+Issues = "https://github.com/berislavlopac/schematalog/issues"
+Source = "https://github.com/berislavlopac/schematalog"
 
-[tool.isort]
-profile = "black"
-line_length = 96
-filter_files = true
-force_alphabetical_sort_within_sections = true
-
-[tool.pylint.checker]
-disable = "fixme, "
-max-line-length = 96
-
-[tool.mypy]
-mypy_path = "schematalog/"
-ignore_missing_imports = true
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

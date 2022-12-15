@@ -188,3 +188,7 @@ tmp/
 
 # kube manifest
 helm/baked_manifest.yaml
+
+# lock files
+requirements.txt
+requirements.in
