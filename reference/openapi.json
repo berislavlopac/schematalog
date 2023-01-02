@@ -22,12 +22,32 @@
     }
   ],
   "paths": {
+    "/openapi.json": {
+      "get": {
+        "summary": "Get API spec in JSON format",
+        "tags": [
+          "meta",
+          "json-schema"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://spec.openapis.org/oas/3.0/schema/2021-09-28"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-spec-json",
+        "description": "Retrieve the OpenAPI spec in JSON format."
+      }
+    },
     "/schemas": {
       "get": {
         "summary": "Get all schemas",
-        "tags": [
-          "json-schema"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -50,7 +70,10 @@
           }
         },
         "operationId": "retrieve-schemas",
-        "description": "Retrieve the latest versions of all published schemas."
+        "description": "Retrieve the latest versions of all published schemas.",
+        "tags": [
+          "json-schema"
+        ]
       }
     },
     "/schemas/{name}": {
@@ -66,9 +89,6 @@
       ],
       "get": {
         "summary": "Get schema",
-        "tags": [
-          "json-schema"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -82,7 +102,10 @@
           }
         },
         "operationId": "retrieve-schema",
-        "description": "Retrieve the latest version of a schema."
+        "description": "Retrieve the latest version of a schema.",
+        "tags": [
+          "json-schema"
+        ]
       },
       "put": {
         "summary": "Update schema",
@@ -212,14 +235,14 @@
             "pattern": "^([0-9]+)\\.([0-9]+)$",
             "description": "Version of the schema, in the comver form: [major].[minor].",
             "example": "1.2",
-            "default": 0
+            "default": "0.0"
           },
           "description": {
             "type": "string",
             "description": "Description of the schema."
           },
           "schema": {
-            "$ref": "https://json-schema.org/draft/2020-12/schema"
+            "$ref": "https://json-schema.org/draft-04/schema"
           },
           "created_on": {
             "type": "string",
@@ -246,6 +269,9 @@
   "tags": [
     {
       "name": "json-schema"
+    },
+    {
+      "name": "meta"
     }
   ]
 }
